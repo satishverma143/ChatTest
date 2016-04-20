@@ -1,0 +1,9 @@
+﻿extends layout
+
+block content
+  h1= title
+  p Dude, where is my page?
+  if userName
+    a(href="/admin") Take me to the homepage!
+  else
+    a(href="/") Take me to the homepage!

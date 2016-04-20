@@ -1,0 +1,52 @@
+﻿extends _Layout
+
+
+block content
+  .panel.panel-info
+    .panel-heading
+        h3.panel-title.pull-left= title
+        a.btn.btn-primary.btn-sm.pull-right(href='/admin') Back
+        div.clearfix
+      .panel-body        
+         div.row
+           form(id="formAddUser", action="adduser", method="post")
+             div.col-md-6
+               
+                .form-group
+                    label(for='name') Full Name:
+                    input.form-control(type="text", name="name", placeholder="Full Name")
+                .form-group
+                    label(for='email') Email address:
+                    input.form-control(type="text", name="email", placeholder="Email")
+                .form-group
+                    label(for='pwd') Password:
+                    input.form-control(type='password', name="password", placeholder="Password")
+                .form-group
+                    label(for='confirmPassword') Confirm Password:
+                    input.form-control(type='password', name="confirmPassword", placeholder="Confirm Password")
+                //.checkbox
+                //    label
+                //      input(type='checkbox')
+                      |  Remember me
+                //  button.btn.btn-default(type='submit') Submit
+
+             div.col-md-6
+               .form-group
+                   label(for='ddlrole') Select Role:
+                   select.form-control(id="ddlrole" name="ddlrole")
+                       option(value='') Select Role
+                       option(value='1') User
+                       option(value='2') Admin
+                       option(value='3') Support
+               .form-group
+                   label(for='status') Status:
+                   div.radio
+                      label.radio-inline
+                          input(type='radio', name='optstatus' value="1" checked)
+                          |Active
+                      label.radio-inline
+                           input(type='radio', name='optstatus' value="0")
+                           |Not Active               
+
+             div.col-md-12
+                 button.btn.btn-success(type='submit') Submit

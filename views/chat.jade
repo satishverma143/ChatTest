@@ -1,0 +1,165 @@
+﻿extends ./_partial/_chat_layout
+
+block css
+    link(href="/wdt-emoji-bundle/wdt-emoji-bundle.css" rel="stylesheet")
+    
+
+block sidebar
+   #sidebar-wrapper
+    .box.box-widget.widget-user-2
+      .widget-user-header.bg-yellow
+        .widget-user-image
+          i.menu-icon.img-circle#myName
+        h3.widget-user-username.captialname#myInfo
+        span.widget-user-status
+          i.fa.fa-circle.text-success
+          |  Online
+      .box-footer.no-padding
+        ul.sidebar-nav
+          li.sidebar-brand
+            | Online Users
+            span#totalUser.pull-right(style='right: 20px; position: absolute;')
+              i.fa.fa-user
+              |  
+          #userList.list-group
+
+
+block content
+  #PrivateTab   
+  // Modal
+  #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#myModalLabel.modal-title
+            span.glyphicon.glyphicon-warning-sign
+            |  Alert Message
+        #alertMsg.modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+  // Modal Loading
+  #myModalLoading.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-body(style='text-align:center;')
+          img(src='/images/loading.GIF')
+          h3
+            span#loadingText Loading please wait....
+              
+  #context(style='display:none;')
+    .row  
+      .col-md-12
+        .box.box-primary.direct-chat.direct-chat-primary#boxc
+          .box-header.with-border
+            h3.box-title 
+               i.fa.fa-comments-o
+               |  Group Chat
+          .box-body
+            #barch.direct-chat-messages
+              .direct-chat-msg#messages
+              #msgSending(style='height:30px;')
+              p.bubble-content-txt(style='height:30px; ')
+          .box-footer.clearfix
+            #chatBox
+               form#chatForm(role='form', action="", enctype="multipart/form-data", method='post')
+                 input#username(type='hidden')
+                 //input#chatInput.form-control.input-lg(type='text', style='width:100%;', placeholder='Start texting....', required='', autocomplete='off')
+                 //.input-group.margin
+                 //p.emoji-picker-container
+                    input#chatInput.form-control.input-lg(type='text', name='txtmsg', style='width:100%;', placeholder='Start texting....', required='', autocomplete='off', data-emojiable="true")
+                 //.row(style='margin-top:10px;')                    
+                    .col-md-12
+                      button#btnsubmitchat.bg_none.btn.btn-info.btn-flat.pull-right(type='submit')
+                           <i class="fa fa-paper-plane"></i> 
+                 //.row
+                   .col-md-11
+                     p.emoji-picker-container
+                       input#chatInput.form-control.input-lg(type='text', name='txtmsg', style='width:100%;', placeholder='Start texting....', required='', autocomplete='off', data-emojiable="true")
+                   .col-md-1
+                      button#btnsubmitchat.bg_none.btn.btn-info.btn-flat.pull-right(type='submit')
+                           <i class="fa fa-paper-plane"></i>
+                 .row
+                  .col-md-10
+                      input#chatInput.form-control.input-lg.wdt-emoji-bundle-enabled(type='text', name='txtmsg', style='width:100%;', placeholder='Start texting....', required='', autocomplete='off')
+                      //span.input-group-btn
+                        button#show-real-example.btn.btn-info.btn-lg(type='button')
+                          i.fa.fa-smile-o
+                  .col-md-2
+                     button#btnsubmitchat.bg_none.btn.btn-info.btn-flat.pull-right(type='submit')
+                          <i class="fa fa-paper-plane"></i>     
+               
+      .col-md-3(style='display:none;')
+        .panel.panel-default
+          .panel-heading
+            span.glyphicon.glyphicon-user
+            |   My Login Time
+          .panel-body
+            ul#myActivity.list-group
+              li.list-group-item
+                a#lgtime.pchatme(href='javascript:void(0);')
+        .panel.panel-default
+          .panel-heading
+            span.glyphicon.glyphicon-user
+            |  Users Activity Log!
+          #userAct.panel-body.bar
+            ul#userActivity.list-group
+    .wdt-emoji-popup
+        a.wdt-emoji-popup-mobile-closer(href='#')  × 
+          .wdt-emoji-menu-content
+            #wdt-emoji-menu-header
+              a.wdt-emoji-tab.active(data-group-name='Recent')
+              a.wdt-emoji-tab(data-group-name='People')
+              a.wdt-emoji-tab(data-group-name='Nature')
+              a.wdt-emoji-tab(data-group-name='Foods')
+              a.wdt-emoji-tab(data-group-name='Activity')
+              a.wdt-emoji-tab(data-group-name='Places')
+              a.wdt-emoji-tab(data-group-name='Objects')
+              a.wdt-emoji-tab(data-group-name='Symbols')
+              a.wdt-emoji-tab(data-group-name='Flags')
+              a.wdt-emoji-tab(data-group-name='Custom')
+            .wdt-emoji-scroll-wrapper
+              #wdt-emoji-menu-items
+                input#wdt-emoji-search(type='text', placeholder='Search')
+                h3#wdt-emoji-search-result-title Search Results
+                .wdt-emoji-sections
+                #wdt-emoji-no-result No emoji found
+            #wdt-emoji-footer
+              #wdt-emoji-preview
+                span#wdt-emoji-preview-img
+                #wdt-emoji-preview-text
+                  span#wdt-emoji-preview-name
+                  br
+                  span#wdt-emoji-preview-aliases
+              #wdt-emoji-preview-bundle
+                span Emoji Preview
+
+
+
+block script
+    script(src='js/moment.js')
+    script(src='js/livestamp.min.js')
+    script(src='http://areaaperta.com/nicescroll/js/jquery.nicescroll.min.js')
+    script(src='js/linkifyjs/dist/jquery.linkify.js')
+    script(src='js/linkifyjs/dist/jquery.linkify.min.js')
+    // emoji js
+    script(src='wdt-emoji-bundle/emoji.min.js')
+    script(src='wdt-emoji-bundle/wdt-emoji-bundle.min.js')
+    //script(type='text/javascript', src='jemoji/jemoji.js')
+    //script(src="http://franverona.com/jemoji/js/libs/emojify/js/emojify.js")
+
+    script.
+      $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+      $(function(){
+        $("body").niceScroll();
+        $("#barch").niceScroll();
+      });
+      
+
+
+
+  

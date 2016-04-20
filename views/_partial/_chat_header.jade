@@ -1,0 +1,32 @@
+﻿nav.navbar.navbar-inverse.navbar-fixed-top
+  div.container-fluid
+    div.navbar-header
+      #menu-toggle.navbar-brand
+        i.fa.fa-bars
+      a.navbar-brand(href="/") Chat Application      
+      button.navbar-toggle.collapsed(
+        type="button",
+        data-toggle="collapse",
+        data-target="#main-navbar-collapse",
+        aria-expanded="false"
+      )
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      
+    div#main-navbar-collapse.collapse.navbar-collapse
+      ul.nav.navbar-nav.navbar-right        
+        if userName
+          li
+            a.dropdown-toggle.captialname(data-toggle='dropdown', href="#")= userName
+              input#hiddenusername(type='hidden' value=userName)
+              input#hiddenusericon(type='hidden' value=userIconColor)
+              span.caret
+            ul.dropdown-menu
+              li
+                a(href='/ChangePassword', title='Manage') Change Password
+          li
+            input#hiddenuserID(type='hidden' value=userID)
+            a#btnUserLogout(href="#") Log out
+            //a(href="/chatlogout") Log out

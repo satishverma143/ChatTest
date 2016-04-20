@@ -1,0 +1,27 @@
+{
+  "name": "MyChatApp",
+  "description": "My first chat application using nodeJs and socket.io",
+  "version": "0.0.1",
+  "main": "server.js",
+  "author": {
+    "name": "Satish",
+    "email": "satish.verma143@gmail.com"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.1",
+    "debug": "^2.2.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "formidable": "^1.0.17",
+    "jade": "^1.11.0",
+    "moment": "^2.13.0",
+    "mysql": "^2.10.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "socket.io": "^1.4.5",
+    "socketio-file-upload": "^0.4.6"
+  }
+}

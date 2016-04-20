@@ -1,0 +1,13 @@
+﻿if (flashMessage && flashMessage.length)      
+    .alert.alert-dismissible.alert-danger
+      button.close(type="button", data-dismiss="alert", aria-hidden="true") &times;
+      strong Oh snap! 
+      a.alert-link(href='#')= flashMessage
+
+if (successMessage && successMessage.length)      
+    .alert.alert-dismissible.alert-success
+      button.close(type="button", data-dismiss="alert", aria-hidden="true") &times;
+      strong Oh snap! 
+      a.alert-link(href='#')= successMessage
+
+
