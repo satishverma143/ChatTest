@@ -12,6 +12,17 @@ $(document).ready(function () {
     var user_Name = $("#hiddenusername").val();
     var userIconColor = $("#hiddenusericon").val();
 
+    var uservisiblenow="";
+    vis(function(){
+      uservisiblenow=vis();
+      // if(uservisiblenow){
+      // document.title = 'Visible';
+      // }
+      // else{
+      // document.title = 'Not Visible';
+      // }
+    });
+
     var mySound = new Audio('../sounds/button-09.mp3');
     mySound.load();
 
@@ -49,7 +60,8 @@ $(document).ready(function () {
         $("#msgSending").html(" ");
         $(elem).animate({ scrollTop: $(elem).prop("scrollHeight") }, 1000);
         $("#messages").linkify({ target: "_blank" });
-        notifyMe(data.sender_name);
+        if(!uservisiblenow)
+           notifyMe(data.sender_name);
         mySound.play();
     });
 
@@ -100,7 +112,6 @@ $(document).ready(function () {
         $('#myName').css('background-color', userIconColor).html(shortName(me));
         $('#lgtime').html(datetime);
         progressBar('true');
-
     });
 
     socket.on('totalOnlineUser', function (data, me) {
@@ -231,7 +242,8 @@ $(document).ready(function () {
         $("#chat_div_" + senderId + ' .message').linkify({
             target: "_blank"
         });
-        notifyMe(senderName);
+        if(!uservisiblenow)
+          notifyMe(senderName);
         mySound.play();
     });
 
@@ -429,7 +441,28 @@ $(document).ready(function () {
       // At last, if the user already denied any notification, and you
       // want to be respectful there is no need to bother them any more.
     }
+
+
 });
+
+var vis = (function(){
+    var stateKey, eventKey, keys = {
+        hidden: "visibilitychange",
+        webkitHidden: "webkitvisibilitychange",
+        mozHidden: "mozvisibilitychange",
+        msHidden: "msvisibilitychange"
+    };
+    for (stateKey in keys) {
+        if (stateKey in document) {
+            eventKey = keys[stateKey];
+            break;
+        }
+    }
+    return function(c) {
+        if (c) document.addEventListener(eventKey, c);
+        return !document[stateKey];
+    }
+})();
 
 
 function progressBar(totalOnlineUser) {
