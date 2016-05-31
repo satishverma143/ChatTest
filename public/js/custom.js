@@ -60,8 +60,10 @@ $(document).ready(function () {
         $("#msgSending").html(" ");
         $(elem).animate({ scrollTop: $(elem).prop("scrollHeight") }, 1000);
         $("#messages").linkify({ target: "_blank" });
-        if(!uservisiblenow)
-           notifyMe(data.sender_name);
+        vis(function(){
+          if(!vis())
+            notifyMe(data.sender_name);
+        });
         mySound.play();
     });
 
@@ -201,9 +203,6 @@ $(document).ready(function () {
         $.each(data, function (index, value) {
             $('#userActivity').prepend('<li class=" list-group-item ' + value.color + '">' + value.name + value.msg + ' </li>');
         });
-
-
-
     });
 
     socket.on('userDisconnect', function () {
@@ -242,8 +241,10 @@ $(document).ready(function () {
         $("#chat_div_" + senderId + ' .message').linkify({
             target: "_blank"
         });
-        if(!uservisiblenow)
-          notifyMe(senderName);
+        vis(function(){
+          if(!vis())
+            notifyMe(senderName);
+        });
         mySound.play();
     });
 
