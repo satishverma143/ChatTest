@@ -18,8 +18,8 @@ block content
            table.table.table-striped.table-hover.table-bordered.table-list
              thead
                  tr
-                   th.hidden-xs ID 
-                   th Name   
+                   th.hidden-xs ID
+                   th Name
                    th Email
                    th Date
                    th Status
@@ -33,8 +33,32 @@ block content
                      td=item.email
                      td=moment(item.created_at).format('LL')
                      td=item.is_active == 1 ? 'Active' : 'NotActive'
-                     td(align="center")
+                     td(align="center", style="width: 125px;")
                        a.btn.btn-default(href='/edit/' + item.id)
                         em.fa.fa-pencil
-  
-             
+                       button#btnviewp.btn.btn-default(type="button",data-toggle="modal", data-valuep=item.id, style='margin-left: 15px;', data-target='.btnviewpass')
+                        em.fa.fa-eye(aria-hidden="true")
+
+  .modal.fade.btnviewpass#userdetail(tabindex='-1', role='dialog', data-backdrop="static")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4.modal-title User Detail
+        .modal-body
+         .form-horizontal
+            .form-group
+              label.col-sm-3 Name :
+              .col-sm-8
+                label#u-name
+            .form-group
+              label.col-sm-3 Email :
+              .col-sm-8
+                label#u-email
+            .form-group
+              label.col-sm-3 Password :
+              .col-sm-8
+                label#u-pass
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close

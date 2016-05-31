@@ -42,12 +42,25 @@ module.exports.GetUser = function (user_id, callback) {
 };
 
 module.exports.UpdateUser = function (userData, callback) {
-    pool.query('UPDATE users SET username = ?, roleid = ?, updated_at = ?, is_active = ?, usericon_color = ? WHERE id = ?',
-      [userData.name, userData.ddlrole, new Date(), userData.optstatus, userData.usericon_color, userData.user_id] ,
-        function (err) {
-        if (err)
-            console.log(err);
-        else
-            callback(userData.user_id);
-    });
+   if(userData.pwd){
+     pool.query('UPDATE users SET username = ?, roleid = ?, updated_at = ?, is_active = ?, password = ?, passwordread = ? WHERE id = ?',
+       [userData.name, userData.ddlrole, new Date(), userData.optstatus, userData.confpwd, userData.pwd, userData.user_id] ,
+         function (err) {
+         if (err)
+             console.log(err);
+         else
+             callback(userData.user_id);
+     });
+   }
+   else{
+     pool.query('UPDATE users SET username = ?, roleid = ?, updated_at = ?, is_active = ? WHERE id = ?',
+       [userData.name, userData.ddlrole, new Date(), userData.optstatus, userData.user_id] ,
+         function (err) {
+         if (err)
+             console.log(err);
+         else
+             callback(userData.user_id);
+     });
+   }
+
 };

@@ -5,7 +5,7 @@ var utility = require('../config/utility.js');
 var adminFunctions = require('../functions/adminFunctions.js');
 
 module.exports = function (app) {
-    
+
     app.get('/admin', utility.isAuthenticated, function (req, res) {
         if (req.user.roleid == 2) {
             res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -23,7 +23,7 @@ module.exports = function (app) {
         else
             res.redirect('/chat');
     });
-    
+
     // Display Admin Home Page
     app.get('/admin1', utility.isAuthenticated, function (req, res) {
         res.render('admin/adminDashboard', {
@@ -33,7 +33,7 @@ module.exports = function (app) {
             flashMessage: req.flash('flashMessage')
         });
     });
-    
+
     // Display Add User Form
     app.get('/adduser', function (req, res) {
         res.render('admin/addUser', {
@@ -43,7 +43,7 @@ module.exports = function (app) {
             flashMessage: req.flash('flashMessage')
         });
     });
-    
+
     // Save User Form Data / Add user in to db
     app.post('/adduser', function (req, res) {
         var salt = '$2a$10$wENMOiXaNvkXN9BmCbh4ZO';
@@ -73,10 +73,10 @@ module.exports = function (app) {
                 //req.flash('error', 'Could not update your name, please contact our support team');
                 //res.redirect(req.flash('flashMessage', 'Sorry! That email is already takenqqq.'), 'adduser');
             }
-                
+
         });
     });
-    
+
     // Edit User
     app.get('/Edit/:id', function (req, res) {
         adminFunctions.GetUser(req.params.id, function (results) {
@@ -96,20 +96,43 @@ module.exports = function (app) {
             }
         });
     });
-    
+
     // --- POST
     app.post('/Edit/:id', function (req, res) {
         //var User = req.body;
+        var salt = '$2a$10$wENMOiXaNvkXN9BmCbh4ZO';
+        //var salt = bcrypt.genSaltSync(10);
+        // Hash the password with the salt
+        var hash = bcrypt.hashSync(req.body.password, salt);
+
         var User = {
             name: req.body.name,
             user_id: req.body.user_id,
             ddlrole: req.body.ddlrole,
             optstatus: req.body.optstatus,
-            usericon_color: utility.getRandomColor()
+            pwd: req.body.password,
+            confpwd: hash
         };
         adminFunctions.UpdateUser(User, function () {
             req.flash('successMessage', 'Update successfully!!.');
-            res.redirect('/admin/');
+            res.redirect('/admin');
         });
     });
+
+    //get user data for showing pass
+    app.get('/getuserdetail?:uid', function (req, res) {
+        //res.send({ redirect: '', status: true, data:req.query.uid });
+        adminFunctions.GetUser(req.query.uid, function (results) {
+            if (results.length == 0) {
+                //res.status(404).send('Customer does not exist <br> <a href=/Customers>Go back</a>');
+                res.status(404).render('404_error', { title: "Sorry, page not found", userName: (req.user) ? req.user.username : undefined, });
+            }
+            else {
+              res.json({redirect: '', status: true, email:results[0].email, name:results[0].username, pass:results[0].passwordread });
+                //res.send({ redirect: '', status: true, data:results });
+            }
+        });
+    });
+
+
 }

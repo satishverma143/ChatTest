@@ -7,21 +7,21 @@ block content
         h3.panel-title.pull-left= title
         a.btn.btn-primary.btn-sm.pull-right(href='/admin') Back
         div.clearfix
-      .panel-body        
+      .panel-body
          div.row
            form(id="edituser", action="/Edit/" + user[0].id, method="post")
              input(type="hidden", name="user_id", value=user[0].id)
-             div.col-md-6               
+             div.col-md-6
                 .form-group
                     label(for='name') Full Name:
                     input.form-control(type="text", name="name", placeholder="Full Name", value=user[0].username)
                 .form-group
                     label(for='email') Email address:
                     input.form-control(type="text", name="email", placeholder="Email", value=user[0].email, readonly="readonly" disabled)
-                //-.form-group
-                    label(for='pwd') Password:
+                .form-group
+                    label(for='password') Password:
                     input.form-control(type='password', name="password", placeholder="Password")
-                //-.form-group
+                .form-group
                     label(for='confirmPassword') Confirm Password:
                     input.form-control(type='password', name="confirmPassword", placeholder="Confirm Password")
 
@@ -34,14 +34,14 @@ block content
                        option(value='2' selected=user[0].roleid=="2") Admin
                        option(value='3' selected=user[0].roleid=="3") Support
                .form-group
-                   label(for='status') Status:                   
+                   label(for='status') Status:
                    div.radio
                       label.radio-inline
                           input(type='radio', name='optstatus' value="1" checked=user[0].is_active=="1")
                           |Active
                       label.radio-inline
                           input(type='radio', name='optstatus' value="0" checked=user[0].is_active=="0")
-                          |Not Active               
+                          |Not Active
 
              div.col-md-12
                  button.btn.btn-success(type='submit') Submit
