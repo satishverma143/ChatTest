@@ -1,0 +1,26 @@
+﻿extends ./_partial/_chat_layout
+
+block css
+    link(href='/css/stickies/stickies.css', rel='stylesheet')
+    //if IE
+      script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+    style.
+      #wrapper{
+        padding-left:0;
+      }
+
+block content
+    .title CW Notebook
+
+block script
+  script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js')
+  script(src='js/stickies/stickies.js')
+  script.
+    STICKIES.open();
+    var socket = io.connect();
+    $('#btnUserLogout').click(function (e) {
+        e.preventDefault();
+        socket.emit('userLogout', true);
+        window.location = 'chatlogout';
+        //alert('logout');
+    });

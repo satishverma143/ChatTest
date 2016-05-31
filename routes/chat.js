@@ -6,8 +6,8 @@ var formidable = require('formidable');
 var fs = require('fs');
 var util = require('util');
 
-module.exports = function (app) {    
-    
+module.exports = function (app) {
+
     app.get('/chat', utility.isAuthenticated, function (req, res) {
         res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         res.render('chat', {
@@ -42,9 +42,9 @@ module.exports = function (app) {
         //    });
         //}
 
-        
+
     });
-    
+
     // =====================================
     // LOGOUT ==============================
     // =====================================
@@ -53,15 +53,15 @@ module.exports = function (app) {
         req.session.destroy();
         res.redirect('/');
     });
-    
+
     app.post('/savechat', function (req, res) {
         var r = req.body;
         var f = req.file;
         console.log("Hello World");
-        
+
         var newFileNameArray = [];
         var newFileName = "";
-        
+
         //uploading(req, res, function (err) {
         //    //console.log(req.body);
         //    //console.log(req.files);
@@ -70,14 +70,14 @@ module.exports = function (app) {
         //    }
         //    res.end("File is uploaded");
         //});
-        
+
         //res.status(204).end();
-        
-        // creates a new incoming form. 
+
+        // creates a new incoming form.
         var form = new formidable.IncomingForm();
-        
+
         form.uploadDir = path.join('./uploads');
-        
+
         // parse a file upload
         form.parse(req, function (err, fields, files) {
             res.writeHead(200, { 'content-type': 'text/plain' });
@@ -87,17 +87,17 @@ module.exports = function (app) {
             //socket.emit('chatMsg');
             res.end(util.inspect({status:true, files: newFileNameArray}));
         });
-        
+
         form.on('file', function (field, file) {
             var fileExtension = path.extname(file.name);
             console.log("extension is  " + fileExtension);
             //fs.renameSync(file.path, path.join(form.uploadDir, "123" + file.name));
-            var date = new Date();            
+            var date = new Date();
             newFileName = req.user.id + "C" + date.getDay() + date.getTime() + fileExtension;
             newFileNameArray.push(newFileName);
             fs.renameSync(file.path, path.join(form.uploadDir, newFileName));
         });
-        
+
         //form.on('end', function (fields, files) {
         //    /* Temporary location of our uploaded file */
         //    var temp_path = this.openedFiles[0].path;
@@ -118,14 +118,20 @@ module.exports = function (app) {
         form.on('error', function (err) {
             console.log('An error has occured: \n' + err);
         });
-        
+
         // once all the files have been uploaded, send a response to the client
         form.on('end', function () {
             //res.send({ status: true });
             res.end('success');
         });
+    });
 
-        
-
+    app.get('/notepad', function (req, res) {
+        res.render('notepad', {
+            title: 'CW Notepad',
+            message: 'Notepad',
+            userName: (req.user) ? req.user.username : undefined,
+            flashMessage: req.flash('flashMessage')
+        });
     });
 }

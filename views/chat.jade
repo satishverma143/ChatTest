@@ -20,7 +20,6 @@ block sidebar
             | Online Users
             span#totalUser.pull-right(style='right: 20px; position: absolute;')
               i.fa.fa-user
-              | 
           #userList.list-group
 
 
@@ -138,6 +137,7 @@ block content
 
 
 block script
+    script(src='/js/custom.js')
     script(src='js/moment.js')
     script(src='js/livestamp.min.js')
     script(src='js/jquery.nicescroll.min.js')
@@ -157,4 +157,5 @@ block script
       $(function(){
         $("body").niceScroll();
         $("#barch").niceScroll();
+        $("#sidebar-wrapper").niceScroll();
       });
