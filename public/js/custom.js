@@ -64,7 +64,7 @@ $(document).ready(function () {
           if(!vis())
             notifyMe(data.sender_name);
         });
-        mySound.play();
+        //mySound.play();
     });
 
     socket.on('newOne', function (data, messages) {
@@ -245,7 +245,7 @@ $(document).ready(function () {
           if(!vis())
             notifyMe(senderName);
         });
-        mySound.play();
+        //mySound.play();
     });
 
     socket.on('UserNotOnline', function (data) {
